@@ -142,7 +142,10 @@ export default function PasswordGenerator() {
 
             {/* History Panel */}
             <div className="ml-6 w-80 bg-white p-4 rounded-2xl shadow-xl overflow-y-auto max-h-[36rem]">
+                <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold mb-4">History</h2>
+                {history?.length > 0 && <button onClick={() => setHistory([])}>Clear All</button>}
+                </div>
                 {history.length === 0 ? (
                     <p className="text-gray-500 text-sm">No passwords generated yet.</p>
                 ) : (
