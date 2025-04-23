@@ -121,7 +121,7 @@ export default function PasswordGenerator() {
                             className="absolute top-2 right-4 cursor-pointer"
                             onClick={() => setShowPassword(prev => !prev)}
                         >
-                            {showPassword ? <Eye /> : <EyeOff />}
+                            {showPassword ? <EyeOff /> : <Eye />}
                         </div>
                     </div>
 
