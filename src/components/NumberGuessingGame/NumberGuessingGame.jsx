@@ -13,6 +13,7 @@ export default function NumberGuessingGame() {
         setCorrectNumber(randomNumber);
         setGameOver(false);
         setMessage("🔄 Waiting for your guess...");
+        setAttempts(0);
     };
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function NumberGuessingGame() {
         }
         setAttempts(attempts + 1);
 
-        if (attempts !== 10) {
+        if (attempts !== 9) {
             if (guess > correctNumber) {
                 setMessage("☝️ Your number is too high.");
             } else if (guess < correctNumber) {
