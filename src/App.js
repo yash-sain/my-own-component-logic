@@ -8,11 +8,11 @@ import CalendarScheduler from './components/CalendarScheduler/CalendarScheduler'
 const App = () => {
   return (
     <div>
-      <NumberGuessingGame />
+      {/* <NumberGuessingGame /> */}
       {/* <RockPaperScissors /> */}
       {/* <PasswordGenerator /> */}
       {/* <TodoApp /> */}
-      {/* <CalendarScheduler /> */}
+      <CalendarScheduler />
     </div>
   )
 }
