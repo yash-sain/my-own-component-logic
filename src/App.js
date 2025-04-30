@@ -4,6 +4,7 @@ import RockPaperScissors from './components/RockPaperScissors/RockPaperScissors'
 import PasswordGenerator from './components/PasswordGenerator/PasswordGenerator';
 import TodoApp from './components/TodoApp/TodoApp';
 import CalendarScheduler from './components/CalendarScheduler/CalendarScheduler';
+import ExpenseTrackerUI from './components/ExpenseTrackerUI/ExpenseTrackerUI';
 
 const App = () => {
   return (
@@ -12,7 +13,8 @@ const App = () => {
       {/* <RockPaperScissors /> */}
       {/* <PasswordGenerator /> */}
       {/* <TodoApp /> */}
-      <CalendarScheduler />
+      {/* <CalendarScheduler /> */}
+      <ExpenseTrackerUI />
     </div>
   )
 }
