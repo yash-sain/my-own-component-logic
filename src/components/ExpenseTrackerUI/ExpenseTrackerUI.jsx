@@ -1,5 +1,22 @@
 import { useEffect, useState } from "react";
 
+const months = [
+    { name: "January", id: 1 },
+    { name: "February", id: 2 },
+    { name: "March", id: 3 },
+    { name: "April", id: 4 },
+    { name: "May", id: 5 },
+    { name: "June", id: 6 },
+    { name: "July", id: 7 },
+    { name: "August", id: 8 },
+    { name: "September", id: 9 },
+    { name: "October", id: 10 },
+    { name: "November", id: 11 },
+    { name: "December", id: 12 },
+];
+
+
+
 export default function ExpenseTrackerUI() {
 
     const [title, setTitle] = useState("");
@@ -10,6 +27,9 @@ export default function ExpenseTrackerUI() {
         return getTransactions ? getTransactions : []
     });
 
+    const [getMonth, setGetMonth] = useState("");
+    const [findMonth, setFindMonth] = useState("");
+
     useEffect(() => {
         localStorage?.setItem("transactions", JSON?.stringify(transactions))
     }, [transactions]);
@@ -17,7 +37,9 @@ export default function ExpenseTrackerUI() {
     const handleSubmit = (e) => {
         e?.preventDefault();
 
-        if (!title || !amount || !type) return
+        if (!title || !amount || !type || !getMonth) return
+
+        console.log(getMonth)
 
         if (type === "expense") {
             if (totalBalance < amount) {
@@ -30,14 +52,17 @@ export default function ExpenseTrackerUI() {
             id: crypto?.randomUUID(),
             title,
             amount,
-            type
+            type,
+            month: getMonth
         }
+
+        console.log(data)
 
         setTransactions(prev => [...prev, data]);
         setTitle("")
         setAmount("");
         setType("");
-
+        setGetMonth("")
     }
 
     const { totalIncome, totalExpense } = transactions.reduce((acc, curr) => {
@@ -55,6 +80,10 @@ export default function ExpenseTrackerUI() {
             ? acc + curr.amount
             : acc - curr.amount;
     }, 0);
+
+    const selectFilterData = (e) => {
+        setFindMonth(e?.target?.value)
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 p-4 flex items-center justify-center">
@@ -86,21 +115,50 @@ export default function ExpenseTrackerUI() {
                         <option value="income">Income</option>
                         <option value="expense">Expense</option>
                     </select>
+                    <select name="month" id="month" className="p-2 border rounded-xl" value={getMonth} onChange={(e) => setGetMonth(e?.target?.value)}>
+                        <option value={""}>Select Month</option>
+                        {months?.map(month => {
+                            return (
+                                <option id={month?.id} value={month?.name}>{month?.name}</option>
+                            )
+                        })}
+                    </select>
                     <button type="submit" className="bg-indigo-600 text-white rounded-xl p-2 hover:bg-indigo-700">Add</button>
                 </form>
 
                 {/* Transactions List */}
-                <div className="mb-6">
+                <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold text-indigo-600 mb-3">Recent Transactions</h3>
-                    <ul className="space-y-2">
-                        {transactions?.length > 0 ? transactions?.map(transaction => {
+                    <select name="month" id="month" className="p-2 border rounded-xl" value={findMonth} onChange={selectFilterData}>
+                        <option value={""}>Select Month</option>
+                        {months?.map(month => {
                             return (
-                                <li key={transaction?.id} className="flex justify-between p-3 bg-gray-50 rounded-xl shadow-sm">
-                                    <span>{transaction?.title}</span>
-                                    <span className={`${transaction?.type === "income" ? "text-green-500" : "text-red-500"}`}>{transaction?.type === "income" ? transaction?.amount : -transaction?.amount}</span>
-                                </li>
+                                <option id={month?.id} value={month?.name}>{month?.name}</option>
                             )
-                        }) : <div className="text-center text-xl"><h1>No Expense Found!</h1></div>}
+                        })}
+                    </select>
+                </div>
+                <div className="mb-6">
+                    <ul className="space-y-2">
+                        {transactions?.filter(t => findMonth ? t.month === findMonth : true).length === 0 ? (
+                            <div className="text-center text-xl">
+                                <h1>No Transactions Found!</h1>
+                            </div>
+                        ) : (
+                            <ul className="space-y-2">
+                                {transactions
+                                    .filter(transaction => findMonth ? transaction?.month === findMonth : true)
+                                    .map(transaction => (
+                                        <li key={transaction?.id} className="flex justify-between p-3 bg-gray-50 rounded-xl shadow-sm">
+                                            <span>{transaction?.title}</span>
+                                            <span className={`${transaction?.type === "income" ? "text-green-500" : "text-red-500"}`}>
+                                                {transaction?.type === "income" ? transaction?.amount : -transaction?.amount}
+                                            </span>
+                                        </li>
+                                    ))}
+                            </ul>
+                        )}
+
                     </ul>
                 </div>
 
