@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
 
 const months = [
     { name: "January", id: 1 },
@@ -37,7 +39,7 @@ export default function ExpenseTrackerUI() {
     const handleSubmit = (e) => {
         e?.preventDefault();
 
-        if (!title || !amount || !type || !getMonth) return
+        if (!title || !amount || !type || !getMonth) return;
 
         console.log(getMonth)
 
@@ -84,6 +86,8 @@ export default function ExpenseTrackerUI() {
     const selectFilterData = (e) => {
         setFindMonth(e?.target?.value)
     }
+
+    console.log(transactions[0])
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 p-4 flex items-center justify-center">
@@ -164,7 +168,13 @@ export default function ExpenseTrackerUI() {
 
                 {/* Chart Placeholder */}
                 <div className="h-64 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400">
-                    Pie Chart Here
+                    <BarChart  width={600} height={300} data={transactions}>
+                        <XAxis dataKey="month" stroke="#8884d8" />
+                        <YAxis />
+                        <Tooltip />
+                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                        <Bar dataKey="amount" fill="#8884d8" barSize={30} />
+                    </BarChart>
                 </div>
             </div>
         </div>
