@@ -130,7 +130,6 @@ function MovieApp() {
               onWatchList={watchlistData}
               watchListMovies={watchListMovies}
               getButton={true}
-              
             />
           ))}
         </div>
