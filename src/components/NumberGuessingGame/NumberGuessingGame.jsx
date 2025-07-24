@@ -12,7 +12,7 @@ export default function NumberGuessingGame() {
         const randomNumber = Math.floor(Math.random() * 100) + 1; // 1-100
         setCorrectNumber(randomNumber);
         setGameOver(false);
-        setMessage("🔄 Waiting for your guess...");
+        setMessage("🔄 Restart the game");
         setAttempts(0);
     };
 

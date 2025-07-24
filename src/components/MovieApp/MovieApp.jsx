@@ -74,6 +74,146 @@ const mockMovies = [
     rating: 8.5,
     releaseDate: "2000-05-05",
   },
+  {
+    id: 11,
+    title: "The Godfather",
+    poster: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+    rating: 9.2,
+    releaseDate: "1972-03-24",
+  },
+  {
+    id: 12,
+    title: "The Godfather Part II",
+    poster: "https://image.tmdb.org/t/p/w500/bVq65huQ8vHDd1a4Z37QtuyEvpA.jpg",
+    rating: 9.0,
+    releaseDate: "1974-12-20",
+  },
+  {
+    id: 13,
+    title: "The Lord of the Rings: The Fellowship of the Ring",
+    poster: "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+    rating: 8.8,
+    releaseDate: "2001-12-19",
+  },
+  {
+    id: 14,
+    title: "The Lord of the Rings: The Two Towers",
+    poster: "https://image.tmdb.org/t/p/w500/rrGlNlzFTrXFNGXsD7NNlxq4BPb.jpg",
+    rating: 8.7,
+    releaseDate: "2002-12-18",
+  },
+  {
+    id: 15,
+    title: "The Lord of the Rings: The Return of the King",
+    poster: "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
+    rating: 8.9,
+    releaseDate: "2003-12-17",
+  },
+  {
+    id: 16,
+    title: "The Prestige",
+    poster: "https://image.tmdb.org/t/p/w500/5MXyQfz8xUP3dIFPTubhTsbFY6N.jpg",
+    rating: 8.5,
+    releaseDate: "2006-10-20",
+  },
+  {
+    id: 17,
+    title: "Joker",
+    poster: "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+    rating: 8.5,
+    releaseDate: "2019-10-04",
+  },
+  {
+    id: 18,
+    title: "Whiplash",
+    poster: "https://image.tmdb.org/t/p/w500/oPxnRhyAIzJKGUEdSiwTJQBa5T.jpg",
+    rating: 8.5,
+    releaseDate: "2014-10-10",
+  },
+  {
+    id: 19,
+    title: "Parasite",
+    poster: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    rating: 8.6,
+    releaseDate: "2019-05-30",
+  },
+  {
+    id: 20,
+    title: "Django Unchained",
+    poster: "https://image.tmdb.org/t/p/w500/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg",
+    rating: 8.4,
+    releaseDate: "2012-12-25",
+  },
+  {
+    id: 21,
+    title: "The Wolf of Wall Street",
+    poster: "https://image.tmdb.org/t/p/w500/pWHf4khOloNVfCxscsXFj3jj6gP.jpg",
+    rating: 8.2,
+    releaseDate: "2013-12-25",
+  },
+  {
+    id: 22,
+    title: "Titanic",
+    poster: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
+    rating: 7.9,
+    releaseDate: "1997-12-19",
+  },
+  {
+    id: 23,
+    title: "Avengers: Infinity War",
+    poster: "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+    rating: 8.4,
+    releaseDate: "2018-04-27",
+  },
+  {
+    id: 24,
+    title: "Iron Man",
+    poster: "https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
+    rating: 7.9,
+    releaseDate: "2008-05-02",
+  },
+  {
+    id: 25,
+    title: "Captain America: The Winter Soldier",
+    poster: "https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+    rating: 7.7,
+    releaseDate: "2014-04-04",
+  },
+  {
+    id: 26,
+    title: "Black Panther",
+    poster: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+    rating: 7.3,
+    releaseDate: "2018-02-16",
+  },
+  {
+    id: 27,
+    title: "Deadpool",
+    poster: "https://image.tmdb.org/t/p/w500/inVq3FRqcYIRl2la8iZikYYxFNR.jpg",
+    rating: 8.0,
+    releaseDate: "2016-02-12",
+  },
+  {
+    id: 28,
+    title: "Logan",
+    poster: "https://image.tmdb.org/t/p/w500/fnbjcRDYn6YviCcePDnGdyAkYsB.jpg",
+    rating: 8.1,
+    releaseDate: "2017-03-03",
+  },
+  {
+    id: 29,
+    title: "Mad Max: Fury Road",
+    poster: "https://image.tmdb.org/t/p/w500/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg",
+    rating: 8.1,
+    releaseDate: "2015-05-15",
+  },
+  {
+    id: 30,
+    title: "The Social Network",
+    poster: "https://image.tmdb.org/t/p/w500/n0ybibhJtQ5icDqTp8eRytcIHJx.jpg",
+    rating: 7.7,
+    releaseDate: "2010-10-01",
+  },
 ];
 
 function MovieApp() {
@@ -127,9 +267,9 @@ function MovieApp() {
               onClick={() => {
                 setSelectedMovie(movie);
               }}
+              getButton={true}
               onWatchList={watchlistData}
               watchListMovies={watchListMovies}
-              getButton={true}
             />
           ))}
         </div>
@@ -150,6 +290,8 @@ function MovieApp() {
             movie={movie}
             getRemove={true}
             onDelete={handleRemoveMovie}
+            onWatchList={watchlistData}
+            watchListMovies={watchListMovies}
           />
         ))}
       </div>
