@@ -20,7 +20,10 @@ export default function ExpenseTrackerUI() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("");
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    const storedValue = JSON?.parse(localStorage?.getItem("transactions"));
+    return storedValue ? storedValue : [];
+  });
   const [getMonth, setGetMonth] = useState("");
   const [findMonth, setFindMonth] = useState("");
 
@@ -111,6 +114,10 @@ export default function ExpenseTrackerUI() {
   };
 
   const chartData = prepareChartData();
+
+  useEffect(() => {
+    localStorage?.setItem("transactions", JSON?.stringify(transactions));
+  }, [transactions]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 p-4 flex items-center justify-center">
@@ -235,8 +242,9 @@ export default function ExpenseTrackerUI() {
                         : "text-red-500"
                     }`}
                   >
-                    {transaction?.type === "income" ? "+" : "-"}$
-                    {transaction?.amount}
+                    {transaction?.type === "income"
+                      ? `$${transaction?.amount}`
+                      : `$${Math?.abs(`-${transaction?.amount}`)}`}
                   </span>
                 </li>
               ))}
