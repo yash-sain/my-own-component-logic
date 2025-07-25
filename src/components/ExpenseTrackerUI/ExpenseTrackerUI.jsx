@@ -21,28 +21,39 @@ export default function ExpenseTrackerUI() {
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("");
   const [transactions, setTransactions] = useState(() => {
-    const storedValue = JSON?.parse(localStorage?.getItem("transactions"));
+    const storedValue = JSON.parse(localStorage?.getItem("transactions"));
     return storedValue ? storedValue : [];
   });
   const [getMonth, setGetMonth] = useState("");
   const [findMonth, setFindMonth] = useState("");
 
-  const handleSubmit = (e) => {
-    e?.preventDefault();
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
+  // Dark mode init
+  useEffect(() => {
+    const isDark = localStorage.getItem("theme") === "dark";
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
+
+  const toggleDarkMode = () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!title || !amount || !type || !getMonth) return;
 
     const numAmount = Number(amount);
-
-    if (type === "expense") {
-      if (totalBalance < numAmount) {
-        alert("Insufficient Balance");
-        return;
-      }
+    if (type === "expense" && totalBalance < numAmount) {
+      alert("Insufficient Balance");
+      return;
     }
 
     const data = {
-      id: crypto?.randomUUID(),
+      id: crypto.randomUUID(),
       title,
       amount: numAmount,
       type,
@@ -58,11 +69,8 @@ export default function ExpenseTrackerUI() {
 
   const { totalIncome, totalExpense } = transactions.reduce(
     (acc, curr) => {
-      if (curr.type === "income") {
-        acc.totalIncome += curr.amount;
-      } else if (curr.type === "expense") {
-        acc.totalExpense += curr.amount;
-      }
+      if (curr.type === "income") acc.totalIncome += curr.amount;
+      else if (curr.type === "expense") acc.totalExpense += curr.amount;
       return acc;
     },
     { totalIncome: 0, totalExpense: 0 }
@@ -72,20 +80,13 @@ export default function ExpenseTrackerUI() {
     return curr.type === "income" ? acc + curr.amount : acc - curr.amount;
   }, 0);
 
-  const selectFilterData = (e) => {
-    setFindMonth(e?.target?.value);
-  };
+  const selectFilterData = (e) => setFindMonth(e.target.value);
 
-  // Filter transactions based on selected month
   const filteredTransactions = transactions.filter((transaction) =>
-    findMonth ? transaction?.month === findMonth : true
+    findMonth ? transaction.month === findMonth : true
   );
 
-  // Prepare chart data - group by transaction type
   const prepareChartData = () => {
-    const chartData = [];
-
-    // Calculate totals for the filtered data
     const incomeTotal = filteredTransactions
       .filter((t) => t.type === "income")
       .reduce((sum, t) => sum + t.amount, 0);
@@ -94,51 +95,54 @@ export default function ExpenseTrackerUI() {
       .filter((t) => t.type === "expense")
       .reduce((sum, t) => sum + t.amount, 0);
 
-    if (incomeTotal > 0) {
-      chartData.push({
-        name: "Income",
-        amount: incomeTotal,
-        fill: "#10b981",
-      });
-    }
-
-    if (expenseTotal > 0) {
+    const chartData = [];
+    if (incomeTotal > 0)
+      chartData.push({ name: "Income", amount: incomeTotal, fill: "#10b981" });
+    if (expenseTotal > 0)
       chartData.push({
         name: "Expense",
         amount: expenseTotal,
         fill: "#ef4444",
       });
-    }
 
     return chartData;
   };
 
   const chartData = prepareChartData();
 
-  useEffect(() => {
-    localStorage?.setItem("transactions", JSON?.stringify(transactions));
-  }, [transactions]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 p-4 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-6">
-        <h1 className="text-3xl font-bold text-center mb-6 text-indigo-700">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 dark:from-gray-800 dark:to-gray-900 p-4 flex items-center justify-center relative">
+      <button
+        onClick={toggleDarkMode}
+        className="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 text-black dark:text-white px-4 py-1 rounded"
+      >
+        Toggle Theme
+      </button>
+
+      <div className="bg-white dark:bg-gray-900 text-black dark:text-white rounded-2xl shadow-xl w-full max-w-4xl p-6">
+        <h1 className="text-3xl font-bold text-center mb-6 text-indigo-700 dark:text-indigo-300">
           💰 Expense Tracker
         </h1>
 
         {/* Balance Summary */}
         <div className="grid grid-cols-3 gap-4 text-center mb-6">
-          <div className="bg-green-100 p-4 rounded-xl">
-            <p className="text-sm text-green-700">Income</p>
-            <h2 className="text-xl font-bold text-green-900">${totalIncome}</h2>
+          <div className="bg-green-100 dark:bg-green-900 p-4 rounded-xl">
+            <p className="text-sm text-green-700 dark:text-green-200">Income</p>
+            <h2 className="text-xl font-bold text-green-900 dark:text-green-300">
+              ${totalIncome}
+            </h2>
           </div>
-          <div className="bg-red-100 p-4 rounded-xl">
-            <p className="text-sm text-red-700">Expense</p>
-            <h2 className="text-xl font-bold text-red-900">${totalExpense}</h2>
+          <div className="bg-red-100 dark:bg-red-900 p-4 rounded-xl">
+            <p className="text-sm text-red-700 dark:text-red-200">Expense</p>
+            <h2 className="text-xl font-bold text-red-900 dark:text-red-300">
+              ${totalExpense}
+            </h2>
           </div>
-          <div className="bg-gray-100 p-4 rounded-xl">
-            <p className="text-sm text-gray-700">Balance</p>
-            <h2 className="text-xl font-bold text-gray-900">${totalBalance}</h2>
+          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl">
+            <p className="text-sm text-gray-700 dark:text-gray-300">Balance</p>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              ${totalBalance}
+            </h2>
           </div>
         </div>
 
@@ -146,44 +150,36 @@ export default function ExpenseTrackerUI() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6">
           <input
             type="text"
-            id="title"
-            name="title"
             value={title}
-            onChange={(e) => setTitle(e?.target?.value)}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="p-2 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <input
             type="number"
-            id="amount"
-            name="amount"
             value={amount}
-            onChange={(e) => setAmount(e?.target?.value)}
+            onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
-            className="p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="p-2 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <select
-            id="type"
-            name="type"
             value={type}
-            onChange={(e) => setType(e?.target?.value)}
-            className="p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onChange={(e) => setType(e.target.value)}
+            className="p-2 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Select Type</option>
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
           <select
-            name="month"
-            id="month"
-            className="p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
             value={getMonth}
-            onChange={(e) => setGetMonth(e?.target?.value)}
+            onChange={(e) => setGetMonth(e.target.value)}
+            className="p-2 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Select Month</option>
-            {months?.map((month) => (
-              <option key={month?.id} value={month?.name}>
-                {month?.name}
+            {months.map((month) => (
+              <option key={month.id} value={month.name}>
+                {month.name}
               </option>
             ))}
           </select>
@@ -196,22 +192,20 @@ export default function ExpenseTrackerUI() {
           </button>
         </div>
 
-        {/* Transactions List */}
+        {/* Transactions */}
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-indigo-600">
+          <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-300">
             Recent Transactions {findMonth && `- ${findMonth}`}
           </h3>
           <select
-            name="filterMonth"
-            id="filterMonth"
-            className="p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
             value={findMonth}
             onChange={selectFilterData}
+            className="p-2 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">All Months</option>
-            {months?.map((month) => (
-              <option key={month?.id} value={month?.name}>
-                {month?.name}
+            {months.map((month) => (
+              <option key={month.id} value={month.name}>
+                {month.name}
               </option>
             ))}
           </select>
@@ -219,32 +213,30 @@ export default function ExpenseTrackerUI() {
 
         <div className="mb-6">
           {filteredTransactions.length === 0 ? (
-            <div className="text-center text-xl py-8">
-              <h1 className="text-gray-500">No Transactions Found!</h1>
+            <div className="text-center text-xl py-8 text-gray-500 dark:text-gray-400">
+              <h1>No Transactions Found!</h1>
             </div>
           ) : (
             <ul className="space-y-2 max-h-64 overflow-y-auto">
               {filteredTransactions.map((transaction) => (
                 <li
-                  key={transaction?.id}
-                  className="flex justify-between items-center p-3 bg-gray-50 rounded-xl shadow-sm"
+                  key={transaction.id}
+                  className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-sm"
                 >
                   <div>
-                    <span className="font-medium">{transaction?.title}</span>
-                    <span className="text-sm text-gray-500 ml-2">
-                      ({transaction?.month})
+                    <span className="font-medium">{transaction.title}</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+                      ({transaction.month})
                     </span>
                   </div>
                   <span
                     className={`font-bold ${
-                      transaction?.type === "income"
+                      transaction.type === "income"
                         ? "text-green-500"
                         : "text-red-500"
                     }`}
                   >
-                    {transaction?.type === "income"
-                      ? `$${transaction?.amount}`
-                      : `$${Math?.abs(`-${transaction?.amount}`)}`}
+                    ${transaction.amount}
                   </span>
                 </li>
               ))}
@@ -253,12 +245,12 @@ export default function ExpenseTrackerUI() {
         </div>
 
         {/* Chart */}
-        <div className="bg-gray-50 rounded-xl p-4">
-          <h3 className="text-lg font-semibold text-indigo-600 mb-4 text-center">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+          <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-300 mb-4 text-center">
             {findMonth ? `${findMonth} ` : ""}Income vs Expenses Chart
           </h3>
           {chartData.length === 0 ? (
-            <div className="h-64 flex items-center justify-center text-gray-400">
+            <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
               <p>No data to display</p>
             </div>
           ) : (

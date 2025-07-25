@@ -15,8 +15,8 @@ const App = () => {
       {/* <PasswordGenerator /> */}
       {/* <TodoApp /> */}
       {/* <CalendarScheduler /> */}
-      {/* <ExpenseTrackerUI /> */}
-      <MovieApp />
+      <ExpenseTrackerUI />
+      {/* <MovieApp /> */}
     </div>
   );
 };
