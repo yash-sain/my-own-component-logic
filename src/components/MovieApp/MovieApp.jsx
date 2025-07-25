@@ -7,7 +7,7 @@ const mockMovies = [
   {
     id: 1,
     title: "Inception",
-    poster: "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg",
+    poster: "",
     rating: 8.8,
     releaseDate: "2010-07-16",
   },
@@ -84,7 +84,7 @@ const mockMovies = [
   {
     id: 12,
     title: "The Godfather Part II",
-    poster: "https://image.tmdb.org/t/p/w500/bVq65huQ8vHDd1a4Z37QtuyEvpA.jpg",
+    poster: "",
     rating: 9.0,
     releaseDate: "1974-12-20",
   },
@@ -112,7 +112,7 @@ const mockMovies = [
   {
     id: 16,
     title: "The Prestige",
-    poster: "https://image.tmdb.org/t/p/w500/5MXyQfz8xUP3dIFPTubhTsbFY6N.jpg",
+    poster: "",
     rating: 8.5,
     releaseDate: "2006-10-20",
   },
@@ -126,7 +126,7 @@ const mockMovies = [
   {
     id: 18,
     title: "Whiplash",
-    poster: "https://image.tmdb.org/t/p/w500/oPxnRhyAIzJKGUEdSiwTJQBa5T.jpg",
+    poster: "",
     rating: 8.5,
     releaseDate: "2014-10-10",
   },
@@ -189,7 +189,7 @@ const mockMovies = [
   {
     id: 27,
     title: "Deadpool",
-    poster: "https://image.tmdb.org/t/p/w500/inVq3FRqcYIRl2la8iZikYYxFNR.jpg",
+    poster: "",
     rating: 8.0,
     releaseDate: "2016-02-12",
   },

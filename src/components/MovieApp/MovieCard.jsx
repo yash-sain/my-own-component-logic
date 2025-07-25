@@ -7,7 +7,7 @@ function MovieCard({
   onDelete, // new prop for delete functionality
   watchListMovies,
   getButton = false,
-  getRemove = false
+  getRemove = false,
 }) {
   const hasExistMovie = new Set(watchListMovies?.map((item) => item?.id));
   const hasMovieExist = hasExistMovie?.has(movie?.id);
@@ -18,7 +18,7 @@ function MovieCard({
       onClick={onClick}
     >
       <img
-        src={movie.poster}
+        src={movie.poster !== "" ? movie.poster : "/assets/image1.png"}
         alt={movie.title}
         className="w-full h-64 object-cover"
       />

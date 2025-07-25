@@ -11,7 +11,7 @@ function MovieModal({ movie, onClose }) {
           ✖
         </button>
         <img
-          src={movie.poster}
+          src={movie.poster !== "" ? movie?.poster : "/assets/image1.png"}
           alt={movie.title}
           className="w-full h-72 object-cover rounded"
         />
