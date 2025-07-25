@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { Moon, Sun } from "lucide-react";
 
 const months = [
   { name: "January", id: 1 },
@@ -26,20 +27,23 @@ export default function ExpenseTrackerUI() {
   });
   const [getMonth, setGetMonth] = useState("");
   const [findMonth, setFindMonth] = useState("");
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
-  // Dark mode init
   useEffect(() => {
     const isDark = localStorage.getItem("theme") === "dark";
     document.documentElement.classList.toggle("dark", isDark);
+    setIsDark(isDark);
   }, []);
 
-  const toggleDarkMode = () => {
-    const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+  const toggleTheme = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    document.documentElement.classList.toggle("dark", newDark);
+    localStorage.setItem("theme", newDark ? "dark" : "light");
   };
 
   const handleSubmit = (e) => {
@@ -113,10 +117,11 @@ export default function ExpenseTrackerUI() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-200 to-blue-100 dark:from-gray-800 dark:to-gray-900 p-4 flex items-center justify-center relative">
       <button
-        onClick={toggleDarkMode}
-        className="absolute top-4 right-4 bg-gray-300 dark:bg-gray-700 text-black dark:text-white px-4 py-1 rounded"
+        onClick={toggleTheme}
+        className="absolute top-7 right-7 flex items-center gap-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white px-3 py-1 rounded transition"
       >
-        Toggle Theme
+        {isDark ? <Sun size={18} /> : <Moon size={18} />}
+        {isDark ? "Light Mode" : "Dark Mode"}
       </button>
 
       <div className="bg-white dark:bg-gray-900 text-black dark:text-white rounded-2xl shadow-xl w-full max-w-4xl p-6">
